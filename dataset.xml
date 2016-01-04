@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accounting>
+  <transaction>
+    <source>1</source>
+    <destination>2</destination>
+    <timestamp>2015-12-31T19:10:58+01:00</timestamp>
+    <amount>13.56</amount>
+    <tags>
+      <tag>Food &amp; drinks</tag>
+      <tag>coffee</tag>
+    </tags>
+  </transaction>
+</accounting>

@@ -1,0 +1,22 @@
+user:        Lukas Prokop
+entities:
+    0: "cash"
+    1: "bank account"
+    2: "company"
+    3: "associations"
+    4: "friends & family"
+    5: "donations"
+tags:
+    - Food & drinks; household
+    - Food & drinks; coffee
+    - Food & drinks; external
+    - Flat & house keeping
+    - Hobby & infrastructure & hardware
+    - Gifts; birthdays
+    - Gifts; other gifts
+    - Education
+    - Transportation
+    - Vacation
+    - Software licenses
+    - Membership fee
+    - Drawing
