@@ -1,4 +1,6 @@
 user:        Lukas Prokop
+storage:     xml
+xmlfile:     dataset.xml
 entities:
     0: "cash"
     1: "bank account"

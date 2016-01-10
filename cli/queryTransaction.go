@@ -9,10 +9,24 @@ import (
 	"strings"
 	"time"
 
-	"github.com/meisterluk/personal-accounting.go/types"
+	"github.com/meisterluk/personal-accounting-go/types"
+	"github.com/meisterluk/personal-accounting-go/utils"
 )
 
-func queryTransaction(t *Transaction, app *Application) {
+func retrieveEntity(entityID string, app *types.Application) (int64, error) {
+	entity, err := strconv.ParseInt(strings.TrimSpace(entityID), 10, 64)
+	if err != nil {
+		panic(fmt.Sprintf("Invalid value received for entity: %s - %s", entityID, err.Error()))
+	}
+	for id := range app.Entities {
+		if id == entity {
+			return entity, nil
+		}
+	}
+	return 0, fmt.Errorf("Entity not found: %d", entity)
+}
+
+func queryTransaction(t *types.Transaction, app *types.Application) {
 	reader := bufio.NewReader(os.Stdin)
 
 	// print entities
@@ -62,7 +76,7 @@ func queryTransaction(t *Transaction, app *Application) {
 	if timestamp == "\n" {
 		when = time.Now()
 	} else {
-		when, err = time.Parse(time.RFC3339, timestamp)
+		when, err = time.Parse(time.RFC3339, strings.TrimSpace(timestamp))
 		if err != nil {
 			panic(fmt.Sprintf("Could not parse date: %s", err.Error()))
 		}
@@ -96,23 +110,16 @@ func queryTransaction(t *Transaction, app *Application) {
 		tagname := app.Tags[id]
 		tagnames := strings.Split(tagname, ";")
 		for _, tag := range tagnames {
-			if !contains(tags, strings.TrimSpace(tag)) {
+			if !utils.ContainsString(tags, strings.TrimSpace(tag)) {
 				tags = append(tags, strings.TrimSpace(tag))
 			}
 		}
 	}
 
-	fmt.Println()
-	fmt.Println("TRANSACTION")
-	fmt.Printf("  From:           %s\n", app.Entities[srcEntity])
-	fmt.Printf("  To:             %s\n", app.Entities[destEntity])
-	fmt.Printf("  At:             %s\n", when.Format(time.RFC3339))
-	fmt.Printf("  Tags:           %s\n", strings.Join(tags, ", "))
-	fmt.Printf("  Amount:         %s\n", amount)
-	fmt.Println()
+	fmt.Println(t.String())
 
-	t.Amount = amount
-	t.Datetime = TransactionTimestamp(when)
+	t.Amount = *amount
+	t.Datetime = types.TransactionTimestamp{App: app, DateTime: when}
 	t.From = srcEntity
 	t.To = destEntity
 	t.Tags = tags

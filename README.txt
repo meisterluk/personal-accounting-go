@@ -1,8 +1,8 @@
-personal-accounting.go
+personal-accounting-go
 ======================
 
 :author:    meisterluk
-:license:   Public Domain
+:license:   CC0 1.0 Universal
 :version:   0.0.1-initial
 
 Personal accounting is a small script enabling myself to organize
